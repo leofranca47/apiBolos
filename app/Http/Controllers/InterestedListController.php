@@ -54,9 +54,9 @@ class InterestedListController extends Controller
         try {
             $result = $this->interestedListService->delete($id);
             if ($result) {
-                return response()->json(["message" => "O Bolo de id {$id} foi deletado com sucesso!"]);
+                return response()->json(["message" => "Interessado removido com sucesso"]);
             }
-            return response()->json(["message" => "O Bolo de id {$id} não existe no banco para deletar!"]);
+            return response()->json(["message" => "Não foi encontrado o interessado na lista"]);
 
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);

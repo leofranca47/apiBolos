@@ -25,7 +25,7 @@ class InterestedListUpdateRequest extends FormRequest
     {
         return [
             "id" => 'required',
-            "email" => 'required|unique:interested_list,email,'.$this->id.',id'
+            "email" => 'required|email|unique:interested_list,email,'.$this->id.',id'
         ];
     }
 }
