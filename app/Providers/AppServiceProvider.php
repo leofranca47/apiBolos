@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\CakeRepositoryInterface;
+use App\Repositories\Contracts\InterestedListRepositoryInterface;
+use App\Repositories\Eloquent\CakeRepository;
+use App\Repositories\Eloquent\InterestedListRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(CakeRepositoryInterface::class, CakeRepository::class);
+        $this->app->bind(InterestedListRepositoryInterface::class, InterestedListRepository::class);
     }
 
     /**
