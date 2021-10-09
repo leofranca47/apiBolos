@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Notifications\WarnInterestedNotification;
 use App\Repositories\Contracts\CakeRepositoryInterface;
 use Exception;
+use Illuminate\Support\Facades\Notification;
 
 class CakeService
 {
@@ -75,6 +77,14 @@ class CakeService
             return $this->cakeRepository->linkInterested($cake_id, $interested_id);
         }catch (Exception $exception) {
             throw new Exception($exception->getMessage());
+        }
+    }
+
+    public function sendEmailInterested($interestedsList, $cake)
+    {
+        foreach ($interestedsList as $interested) {
+            Notification::route('mail', $interested->email)
+                ->notify(new WarnInterestedNotification($cake));
         }
     }
 

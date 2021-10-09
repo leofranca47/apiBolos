@@ -6,8 +6,11 @@ use App\Http\Requests\CakeLinkInterestedRequest;
 use App\Http\Requests\CakeStoreRequest;
 use App\Http\Requests\CakeUpdateRequest;
 use App\Http\Resources\CakeResource;
+use App\Notifications\WarnInterestedNotification;
+use App\Rules\cakeInterestedExist;
 use App\Services\CakeService;
 use Exception;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
 class CakeController extends Controller
@@ -43,6 +46,10 @@ class CakeController extends Controller
     {
         try {
             $result = $this->cakeService->update($request->all());
+            $interestedsList = $this->cakeService->getInterestedCake($result->id);
+            if ($result->amount > 0) {
+                $this->cakeService->sendEmailInterested($interestedsList->interestedList, $result);
+            }
             return new CakeResource($result);
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);

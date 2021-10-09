@@ -22,8 +22,8 @@ class InterestedListRepository extends AbstractRepository implements InterestedL
 
     public function linkCake($interested_id, $cake_id)
     {
-        $interested = $this->interestedList->find($interested_id);
-        $interested->cake()->attach($cake_id);
+        $interested = $this->interestedList->with('cake')->find($interested_id);
+        $interested->cake()->sync($cake_id);
         return $this->interestedList->with('cake')->find($interested_id);
     }
 }

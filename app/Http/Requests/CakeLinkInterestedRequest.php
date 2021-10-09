@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\cakeInterestedExist;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CakeLinkInterestedRequest extends FormRequest
@@ -24,8 +25,8 @@ class CakeLinkInterestedRequest extends FormRequest
     public function rules()
     {
         return [
-            'cake_id' => 'required',
-            'interested_id' => 'required'
+            'cake_id' => 'required|exists:cakes,id',
+            'interested_id' => 'required|exists:interested_list,id'
         ];
     }
 }

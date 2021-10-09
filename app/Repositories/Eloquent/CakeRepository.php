@@ -17,15 +17,16 @@ class CakeRepository extends AbstractRepository implements CakeRepositoryInterfa
 
     public function getInterestedCake($cake_id)
     {
-        return $this->cake->with('interestedList')->whereId($cake_id)->get();
+        return $this->cake->with('interestedList')->whereId($cake_id)->first();
     }
 
     public function linkInterested($cake_id, $interested_id)
     {
-        $cake = $this->cake->find($cake_id);
-        // todoleo vincular só se ja nao exitir vinculo
-        if (isset($cake->interestedList)) {
-            return $this->cake->with('interestedList')->find($cake_id);
+        $cake = $this->cake->with('interestedList')->find($cake_id);
+        foreach ($cake->interestedList as $link) {
+            if($link->interested_id == $interested_id) {
+                return $cake;
+            }
         }
         $cake->interestedList()->attach($interested_id);
         return $this->cake->with('interestedList')->find($cake_id);
