@@ -24,8 +24,8 @@ class InterestedListLinkCakeRequest extends FormRequest
     public function rules()
     {
         return [
-            'interested_id' => 'required',
-            'cake_id' => 'required'
+            'interested_id' => 'required|exists:interested_list,id',
+            'cake_id' => 'required|exists:cakes,id'
         ];
     }
 }

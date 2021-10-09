@@ -24,7 +24,7 @@ class CakeRepository extends AbstractRepository implements CakeRepositoryInterfa
     {
         $cake = $this->cake->with('interestedList')->find($cake_id);
         foreach ($cake->interestedList as $link) {
-            if($link->interested_id == $interested_id) {
+            if($link->pivot->interested_id == $interested_id) {
                 return $cake;
             }
         }
