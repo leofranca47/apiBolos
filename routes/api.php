@@ -25,10 +25,14 @@ Route::put('/cake', [CakeController::class, 'update'])->name('cake.update');
 Route::get('/cakes', [CakeController::class, 'getCakes'])->name('cake.getCakes');
 Route::get('/cake/{id}',[CakeController::class, 'show'])->name('cake.show');
 Route::delete('/cake/{id}',[CakeController::class, 'delete'])->name('cake.delete');
+Route::get('/interestedCake/{cake_id}', [CakeController::class, 'getInterestedCake'])->name('cake.getInterestedCake');
+Route::post('/cake/interestedList', [CakeController::class, 'linkInterested'])->name('cake.linkInterested');
 
 Route::post('/interestedList', [InterestedListController::class, 'store'])->name('interestedList.store');
 Route::put('/interestedList', [InterestedListController::class, 'update'])->name('interestedList.update');
-Route::get('/interestedLists', [InterestedListController::class, 'getInterestedeLists'])->name('cake.getinterestedLists');
+Route::get('/interestedLists', [InterestedListController::class, 'getInterestedeLists'])->name('interestedList.getinterestedLists');
 Route::get('/interestedList/{id}',[InterestedListController::class, 'show'])->name('interestedeList.show');
 Route::delete('/interestedList/{id}',[InterestedListController::class, 'delete'])->name('interestedList.delete');
+Route::get('/cakeInterested/{interested_id}', [InterestedListController::class, 'getCakeInterested'])->name('interestedList.getCakeInterested');
+Route::post('/interestedList/cake', [InterestedListController::class, 'linkCake'])->name('interestedList.linkCake');
 

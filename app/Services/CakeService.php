@@ -60,4 +60,22 @@ class CakeService
         }
     }
 
+    public function getInterestedCake($cake_id)
+    {
+        try {
+            return $this->cakeRepository->getInterestedCake($cake_id);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
+    public function linkInterested($cake_id, $interested_id)
+    {
+        try {
+            return $this->cakeRepository->linkInterested($cake_id, $interested_id);
+        }catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
 }

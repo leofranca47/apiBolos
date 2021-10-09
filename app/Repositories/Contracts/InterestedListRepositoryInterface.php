@@ -10,4 +10,6 @@ interface InterestedListRepositoryInterface
     public function update($data);
     public function delete($id);
     public function find($id);
+    public function getCakeInterested($interested_id);
+    public function linkCake($interested_id, $cake_id);
 }

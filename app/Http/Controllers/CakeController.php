@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CakeLinkInterestedRequest;
 use App\Http\Requests\CakeStoreRequest;
 use App\Http\Requests\CakeUpdateRequest;
 use App\Http\Resources\CakeResource;
@@ -68,6 +69,26 @@ class CakeController extends Controller
             $result = $this->cakeService->show($id);
             return new CakeResource($result);
 
+        } catch (Exception $exception) {
+            return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function getInterestedCake($cake_id)
+    {
+        try {
+            $result = $this->cakeService->getInterestedCake($cake_id);
+            return new CakeResource($result);
+        } catch (Exception $exception) {
+            return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function linkInterested(CakeLinkInterestedRequest $request)
+    {
+        try {
+            $result = $this->cakeService->linkInterested($request->get('cake_id'), $request->get('interested_id'));
+            return new CakeResource($result);
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InterestedListLinkCakeRequest;
 use App\Http\Requests\InterestedListStoreRequest;
 use App\Http\Requests\InterestedListUpdateRequest;
 use App\Http\Resources\InterestedListResource;
@@ -69,6 +70,26 @@ class InterestedListController extends Controller
             $result = $this->interestedListService->show($id);
             return new InterestedListResource($result);
 
+        } catch (Exception $exception) {
+            return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function getCakeInterested($interested_id)
+    {
+        try {
+            $result = $this->interestedListService->getCakeInterested($interested_id);
+            return new InterestedListResource($result);
+        } catch (Exception $exception) {
+            return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    public function linkCake(InterestedListLinkCakeRequest $request)
+    {
+        try {
+            $result = $this->interestedListService->linkCake($request->get('interested_id'), $request->get('cake_id'));
+            return new InterestedListResource($result);
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

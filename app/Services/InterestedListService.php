@@ -60,4 +60,21 @@ class InterestedListService
         }
     }
 
+    public function getCakeInterested($interested_id)
+    {
+        try {
+            return $this->interestedRepository->getCakeInterested($interested_id);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
+    public function linkCake($interested_id, $cake_id)
+    {
+        try {
+            return $this->interestedRepository->linkCake($interested_id, $cake_id);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
 }

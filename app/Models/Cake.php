@@ -19,4 +19,9 @@ class Cake extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function interestedList()
+    {
+        return $this->belongsToMany(interestedList::class, 'interested_cake', 'cake_id', 'interested_id');
+    }
 }
