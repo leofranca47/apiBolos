@@ -7,3 +7,14 @@
 ### Endpoints
 <img src=https://i.ibb.co/tCLvp5t/apibolo.png />
 
+<p> para configurar o envio de emai no arquivo .env, preencha as variaveis abaixo:</p>
+
+MAIL_MAILER=smtp<br>
+MAIL_HOST=<br>
+MAIL_PORT=<br>
+MAIL_USERNAME=<br>
+MAIL_PASSWORD=<br>
+MAIL_ENCRYPTION=<br>
+MAIL_FROM_ADDRESS=<br>
+<p> obs: coloque as informações do seu servidor de email
+
