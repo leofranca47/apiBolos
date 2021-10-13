@@ -80,12 +80,4 @@ class CakeService
         }
     }
 
-    public function sendEmailInterested($interestedsList, $cake)
-    {
-        foreach ($interestedsList as $interested) {
-            Notification::route('mail', $interested->email)
-                ->notify(new WarnInterestedNotification($cake));
-        }
-    }
-
 }

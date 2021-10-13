@@ -25,7 +25,8 @@ class InterestedListStoreRequest extends FormRequest
     {
         return [
             "name" => 'required',
-            "email" => 'required|email|unique:interested_list,email'
+            "email" => 'required|email|unique:interested_list,email',
+            "cake_id" => 'required'
         ];
     }
 }

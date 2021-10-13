@@ -6,11 +6,9 @@ use App\Http\Requests\CakeLinkInterestedRequest;
 use App\Http\Requests\CakeStoreRequest;
 use App\Http\Requests\CakeUpdateRequest;
 use App\Http\Resources\CakeResource;
-use App\Notifications\WarnInterestedNotification;
-use App\Rules\cakeInterestedExist;
 use App\Services\CakeService;
+use App\Services\SendEmailInterested;
 use Exception;
-use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
 class CakeController extends Controller
@@ -42,13 +40,13 @@ class CakeController extends Controller
         }
     }
 
-    public function update(CakeUpdateRequest $request)
+    public function update(CakeUpdateRequest $request, SendEmailInterested $sendEmail)
     {
         try {
             $result = $this->cakeService->update($request->all());
             $interestedsList = $this->cakeService->getInterestedCake($result->id);
             if ($result->amount > 0) {
-                $this->cakeService->sendEmailInterested($interestedsList->interestedList, $result);
+                $sendEmail->SendEmailInterested($interestedsList->interestedList, $result);
             }
             return new CakeResource($result);
         } catch (Exception $exception) {
@@ -94,8 +92,8 @@ class CakeController extends Controller
     public function linkInterested(CakeLinkInterestedRequest $request)
     {
         try {
-            $result = $this->cakeService->linkInterested($request->get('cake_id'), $request->get('interested_id'));
-            return new CakeResource($result);
+            $this->cakeService->linkInterested($request->get('cake_id'), $request->get('interested_id'));
+            return response()->json(["message" => "Adicionado na fila de espera com sucesso!"]);
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

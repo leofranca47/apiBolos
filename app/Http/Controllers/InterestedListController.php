@@ -88,8 +88,8 @@ class InterestedListController extends Controller
     public function linkCake(InterestedListLinkCakeRequest $request)
     {
         try {
-            $result = $this->interestedListService->linkCake($request->get('interested_id'), $request->get('cake_id'));
-            return new InterestedListResource($result);
+            $this->interestedListService->linkCake($request->get('interested_id'), $request->get('cake_id'));
+            return response()->json(["message" => "Adicionado na fila de espera com sucesso!"]);
         } catch (Exception $exception) {
             return response()->json(["message" => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

@@ -8,10 +8,14 @@ use Exception;
 class InterestedListService
 {
     private $interestedRepository;
+    private $cakeService;
+    private $sendEmail;
 
-    public function __construct(InterestedListRepositoryInterface $interestedRepository)
+    public function __construct(InterestedListRepositoryInterface $interestedRepository, CakeService $cakeService, SendEmailInterested $sendEmail)
     {
         $this->interestedRepository = $interestedRepository;
+        $this->cakeService = $cakeService;
+        $this->sendEmail = $sendEmail;
     }
 
     public function findAll()
@@ -27,7 +31,16 @@ class InterestedListService
     public function store($data)
     {
         try {
-            return $this->interestedRepository->create($data);
+            $interested =  $this->interestedRepository->create($data);
+            if (isset($data["cake_id"])) {
+                $cake = $this->cakeService->show($data["cake_id"]);
+                $this->linkCake($interested["id"], $cake["id"]);
+
+                if ($cake->amount > 0) {
+                    $this->sendEmail->SendEmailInterested([$interested], $cake);
+                }
+            }
+            return $interested;
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
